@@ -513,21 +513,21 @@ class Manager(object):
                 # These lines control the flow of the pipeline.
                 try:
                     out = task._pipeline_next()
-                except:
-                    pipeline_tasks.remove(task)
-                    continue
-                #except _PipelineMissingData:
-                #    if pipeline_tasks.index(task) == 0:
-                #        msg = ("%s missing input data and is at beginning of"
-                #               " task list. Advancing state."
-                #               % task.__class__.__name__)
-                #        if mpiutil.rank0:
-                #            logger.debug(msg)
-                #        task._pipeline_advance_state()
-                #    break
-                #except PipelineFinished:
+                #except:
                 #    pipeline_tasks.remove(task)
                 #    continue
+                except _PipelineMissingData:
+                    if pipeline_tasks.index(task) == 0:
+                        msg = ("%s missing input data and is at beginning of"
+                               " task list. Advancing state."
+                               % task.__class__.__name__)
+                        if mpiutil.rank0:
+                            logger.debug(msg)
+                        task._pipeline_advance_state()
+                    break
+                except _PipelineFinished:
+                    pipeline_tasks.remove(task)
+                    continue
                 # Now pass the output data products to any task that needs
                 # them.
                 out_keys = task._out_keys

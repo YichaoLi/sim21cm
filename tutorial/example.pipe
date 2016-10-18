@@ -1,0 +1,13 @@
+# input file for pipeline manager
+# execute this pipeline by either command of the following two:
+# tlpipe dir/to/drift.pipe
+# mpiexec -n N tlpipe dir/to/drift.pipe
+
+pipe_modules = []
+pipe_logging = 'notset'
+#pipe_logging = 'info'
+
+
+from tutorial import example
+pipe_modules.append(example.Example)
+example_params_a = 1.
