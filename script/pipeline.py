@@ -525,7 +525,7 @@ class Manager(object):
                             logger.debug(msg)
                         task._pipeline_advance_state()
                     break
-                except _PipelineFinished:
+                except :
                     pipeline_tasks.remove(task)
                     continue
                 # Now pass the output data products to any task that needs
